@@ -23,17 +23,18 @@ app.use(
 );
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  windowMs: 1 * 60 * 1000, // 15 minutes
+  max: 1, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: { statusCode: 429, message: "Too many requests", result: null },
 });
 
 app.use(limiter);
 app.use("/jwt", jwtProduct.router);
 app.use("/http-token", httpProduct.router);
 
-app.use("/hello", jwtProduct.middleware, demoRoute);
+app.use("/hello", demoRoute);
 
 app.use("*", (_: Request, res: Response) => {
   return wrappedResponse(res, "Not Found", 404, null);
