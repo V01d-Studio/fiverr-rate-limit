@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 import prisma from "./configs/prisma.config";
 import { wrappedResponse } from "./utils/functions";
@@ -21,6 +22,14 @@ app.use(
   })
 );
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
 app.use("/jwt", jwtProduct.router);
 app.use("/http-token", httpProduct.router);
 
