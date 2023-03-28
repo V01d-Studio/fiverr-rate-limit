@@ -67,12 +67,12 @@ export const login = async (
   }
 
   const accessToken = createJwtToken(
-    { id: validationResult.payload.id, type: "access" },
+    { id: validationResult.payload._id, type: "access" },
     secret,
     accessExpire
   );
   const refreshToken = createJwtToken(
-    { id: validationResult.payload.id, type: "refresh" },
+    { id: validationResult.payload._id, type: "refresh" },
     secret,
     refreshExpire
   );

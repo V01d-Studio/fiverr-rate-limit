@@ -6,7 +6,6 @@ import {
   findUserByEmail,
   findUserById,
 } from "../datastores/user.datastore";
-import { User } from "@prisma/client";
 
 export const validateJwt = async (token: string, secret: string) => {
   try {
@@ -77,7 +76,7 @@ export const createJwtToken = (
   return jwt.sign(payload, secret, { expiresIn: expire });
 };
 
-export const makeUser = async (user: Omit<User, "id">) => {
+export const makeUser = async (user: IUser) => {
   const prevUser = await findUserByEmail(user.email);
 
   if (prevUser) {
@@ -92,7 +91,7 @@ export const makeUser = async (user: Omit<User, "id">) => {
   const userPayload = { ...user };
   userPayload.password = hash;
 
-  const newUser = await createUser(userPayload);
+  const newUser = await createUser(userPayload as IUser);
 
   return {
     payload: newUser,

@@ -7,13 +7,13 @@ import mongoose from "mongoose";
 // import prisma from "./configs/prisma.config";
 import { wrappedResponse } from "./utils/functions";
 import demoRoute from "./routes/demo.route";
-// import { authFactory, AuthSchemes } from "./auth";
+import { authFactory, AuthSchemes } from "./auth";
 
 dotenv.config();
 
 const app: Application = express();
 const port: number = parseInt(process.env.PORT || "8000");
-// const jwtProduct = authFactory(AuthSchemes.JWT);
+const jwtProduct = authFactory(AuthSchemes.JWT);
 // const httpProduct = authFactory(AuthSchemes.HTTP);
 
 app.use(express.json());
@@ -32,7 +32,7 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-// app.use("/jwt", jwtProduct.router);
+app.use("/auth", jwtProduct.router);
 // app.use("/http-token", httpProduct.router);
 
 app.use("/hello", demoRoute);
