@@ -27,3 +27,9 @@ type JWTPayload = {
   exp: number | undefined;
   type?: stgring;
 };
+
+interface IUser {
+  name?: string;
+  email: string;
+  password: string;
+}
