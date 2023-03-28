@@ -7,6 +7,8 @@ const userSchema = new Schema<IUser>({
   name: { type: String, required: false },
   email: { type: String, required: true },
   password: String,
+  roleCode: { type: Number, required: true },
+  requestCode: { type: Number, required: true },
 });
 
 // 3. Create a Model.

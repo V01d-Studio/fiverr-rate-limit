@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { wrappedResponse } from "./utils/functions";
 import demoRoute from "./routes/demo.route";
 import { authFactory, AuthSchemes } from "./auth";
+import { viewUser } from "./datastores/user.datastore";
 
 dotenv.config();
 
@@ -33,6 +34,15 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.use("/auth", jwtProduct.router);
+app.get("/user", jwtProduct.middleware, async (req: Request, res: Response) => {
+  const result = await viewUser(res.locals.user._id);
+
+  if (!result) {
+    return wrappedResponse(res, "User not found", 404, null);
+  }
+
+  return wrappedResponse(res, "User found", 200, result);
+});
 // app.use("/http-token", httpProduct.router);
 
 app.use("/hello", demoRoute);

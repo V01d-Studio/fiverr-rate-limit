@@ -32,4 +32,17 @@ interface IUser {
   name?: string;
   email: string;
   password: string;
+  roleCode: number;
+  requestCode: number;
+}
+
+interface IRequest {
+  request: string;
+  code: number;
+}
+
+interface IRole {
+  code: number;
+  seniority: string;
+  function: string;
 }
