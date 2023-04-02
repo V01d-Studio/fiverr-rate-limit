@@ -5,7 +5,7 @@ import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 
 import { wrappedResponse } from "./utils/functions";
-import categorizeRoute from "./routes/categorize.route";
+import { categorize, job } from "./controllers/job.controller";
 import { authFactory, AuthSchemes } from "./auth";
 import { viewUser } from "./datastores/user.datastore";
 
@@ -44,7 +44,8 @@ app.get("/user", jwtProduct.middleware, async (req: Request, res: Response) => {
 });
 // app.use("/http-token", httpProduct.router);
 
-app.use("/hello", categorizeRoute);
+app.get("/categorize", jwtProduct.middleware, categorize);
+app.get("/job", jwtProduct.middleware, job);
 
 app.use("*", (_: Request, res: Response) => {
   return wrappedResponse(res, "Not Found", 404, null);

@@ -1,9 +1,9 @@
 import express from "express";
 import { methodNotAllowed } from "../utils/functions";
-import { sendHello } from "../controllers/categorize.controller";
+import { categorize } from "../controllers/job.controller";
 
 const router = express.Router();
 
-router.route("/").get(sendHello).all(methodNotAllowed);
+router.route("/").get(categorize).all(methodNotAllowed);
 
 export default router;
