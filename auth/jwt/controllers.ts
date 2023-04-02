@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { User } from "@prisma/client";
 
 import defaultConfig from "./defaults";
 import userConfig from "../../configs/auth.config";
@@ -84,7 +83,7 @@ export const login = async (
 };
 
 export const register = async (
-  req: Request<Omit<User, "id">>,
+  req: Request,
   res: Response<GlobalResponse<null>>
 ) => {
   const userResult = await makeUser(req.body);

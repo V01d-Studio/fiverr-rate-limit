@@ -4,9 +4,8 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import mongoose from "mongoose";
 
-// import prisma from "./configs/prisma.config";
 import { wrappedResponse } from "./utils/functions";
-import demoRoute from "./routes/demo.route";
+import categorizeRoute from "./routes/categorize.route";
 import { authFactory, AuthSchemes } from "./auth";
 import { viewUser } from "./datastores/user.datastore";
 
@@ -45,7 +44,7 @@ app.get("/user", jwtProduct.middleware, async (req: Request, res: Response) => {
 });
 // app.use("/http-token", httpProduct.router);
 
-app.use("/hello", demoRoute);
+app.use("/hello", categorizeRoute);
 
 app.use("*", (_: Request, res: Response) => {
   return wrappedResponse(res, "Not Found", 404, null);

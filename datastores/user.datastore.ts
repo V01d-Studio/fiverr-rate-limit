@@ -1,6 +1,3 @@
-import { User } from "@prisma/client";
-
-// import prisma from "../configs/prisma.config";
 import UserModel from "../models/user.model";
 import RoleModel from "../models/role.model";
 import RequestModel from "../models/request.model";

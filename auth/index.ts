@@ -2,7 +2,6 @@ import { Request, Response, Router, NextFunction } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import QueryString from "qs";
 
-import { httpRouters, httpMiddleware } from "./http";
 import { jwtRouters, jwtMiddleware } from "./jwt";
 
 export enum AuthSchemes {
@@ -30,7 +29,6 @@ export const authFactory = (
 ) => {
   const authMap = new Map<string, authMapKey>([
     [AuthSchemes.JWT, { middleware: jwtMiddleware, router: jwtRouters }],
-    [AuthSchemes.HTTP, { middleware: httpMiddleware, router: httpRouters }],
   ]);
 
   const authProduct = authMap.get(scheme);
